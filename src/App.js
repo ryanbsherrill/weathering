@@ -5,12 +5,23 @@ import './App.css';
 
 let zipCode = 22309;
 
+let curnWeather = () => weather(zipCode, (data) => console.log(data.weather[0].main));
 
-let curWeather = weather(zipCode, (data) => data.weather[0].main);
-
+class Weather extends Component{
+  render() {
+    return (
+      <p>
+        {this.props.val}
+      </p>
+    );
+  }
+}
 
 class App extends Component {
-  
+  renderWeather(weatherName) {
+    return <Weather val={weatherName}/>;
+  }
+
   render() {
     return (
       <div className="App">
@@ -20,8 +31,8 @@ class App extends Component {
         </div>
         <p className="App-intro" >
           To get started, edit <code>src/App.js</code> and save to reload.
-          {curWeather}
         </p>
+        {weather(22309, this.renderWeather)}
       </div>
     );
   }
