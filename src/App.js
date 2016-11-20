@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import weather from './getWeather.js';
+import weather from './getWeather';
 import './App.css';
 
-let zipCode = 22309;
+const zipCode = 22309;
 
-let curnWeather = () => weather(zipCode, (data) => console.log(data.weather[0].main));
 
-class Weather extends Component{
+class Weather extends Component {
   render() {
     return (
       <p>
-        {this.props.val}
+      this rendered
+      {this.props.val}
       </p>
     );
   }
 }
 
 class App extends Component {
-  renderWeather(weatherName) {
-    return <Weather val={weatherName}/>;
+  renderWeather(data) {
+    return <Weather val={data} />;
   }
 
   render() {
@@ -32,7 +32,12 @@ class App extends Component {
         <p className="App-intro" >
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {weather(22309, this.renderWeather)}
+        {
+          weather(zipCode).then((data) => {
+            console.log(data);
+            this.renderWeather(data);
+          })
+        }
       </div>
     );
   }
