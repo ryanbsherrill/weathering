@@ -1,34 +1,49 @@
-'use strict';
+
+
 const assert = require('assert');
 const weather = require('../src/getWeather.js');
 
-describe('Array', () => {
-    describe('#indexOf()', () => {
-        it('should return -1 when value is not present', () => {
-            assert.equal(-1, [1, 2, 3].indexOf(4));
-        });
+describe('testing if mocha works', () => {
+  describe('this should pass', () => {
+    it('should return -1 when value is not present', () => {
+      assert.equal(-1, [1, 2, 3].indexOf(4));
     });
+  });
 });
 
 describe('Weather Module', () => {
-    describe('using weather module', () => {
-        it('should show weather for 22309', (done) => {
-            weather(22309, (data) => {
-                assert.equal('Rain', data.weather[0].main);
-                done();
-            });
-        })
-    })
+  const zip = 22309;
 
-    describe('getting weather module', () => {
-        it('should let me use weather data', () => {
-            let curWeather =  () => {
-                 return  weather(22309, (data) => {
-                    data.weather[0].main
+  describe('loaded correctly', () => {
+    it('weather module is a function', () => {
+      assert.equal('function', typeof weather);
+    });
+
+    it('weather(zip) should return  a json object', () => {
+      assert.equal('object', typeof weather(zip));
+    });
+
+    it('zip code should be a number', () => {
+      assert.equal('number', typeof zip);
+    });
+  });
+
+  describe('using weather module', () => {
+    it('should be json', (done) => {
+      weather(zip)
+                .then((val) => {
+                  assert.equal('object', typeof val);
+                  done();
                 });
-            }
-            console.log(curWeather());
-            assert.equal('Rain', curWeather());
-        })
-    })
+    });
+
+    it('should be Clouds', (done) => {
+      weather(zip)
+                .then((val) => {
+                  const weatherName = val.weather[0].main;
+                  assert.equal('Clouds', weatherName);
+                  done();
+                });
+    });
+  });
 });
