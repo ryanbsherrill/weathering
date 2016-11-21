@@ -1,7 +1,7 @@
-
-
 const assert = require('assert');
-const weather = require('../src/getWeather.js');
+const weather = require('../getWeather');
+const Promise = require('bluebird');
+const fetch = Promise.promisify(require('node-fetch'));
 
 describe('testing if mocha works', () => {
   describe('this should pass', () => {
@@ -44,6 +44,19 @@ describe('Weather Module', () => {
                   assert.equal('Clouds', weatherName);
                   done();
                 });
+    });
+  });
+});
+
+
+describe('api server', () => {
+  describe('call api server with zipcode query', () => {
+    it('should return an object', (done) => {
+      fetch('api/zip?zip=22309')
+              .then((data) => {
+                assert.equal('object', typeof data);
+                done();
+              });
     });
   });
 });
